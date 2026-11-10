@@ -306,3 +306,22 @@ body.pdf-mode .plate-sweets {
 body.pdf-mode img {
   loading: eager !important;
 }
+/* Титул: надпись над названием и декоративная полоса */
+.title-kicker {
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #8a8f98;
+  margin-bottom: 14px;
+}
+.title-page::before {
+  content: '';
+  display: block;
+  height: 6px;
+  margin-bottom: 42px;
+  background: repeating-linear-gradient(90deg,
+    #1e2a44 0 70px, #4a7c2f 70px 100px, #e8a33d 100px 130px);
+}
