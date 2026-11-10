@@ -140,6 +140,8 @@ async function buildPDF() {
     if (!window.jspdf || !window.jspdf.jsPDF) await loadScript(JSPDF_SRC);
     const jsPDF = window.jspdf && window.jspdf.jsPDF;
     if (!jsPDF) throw new Error('не загрузился jsPDF');
+    if (document.fonts && document.fonts.ready) await document.fonts.ready;
+     
 
     await waitForImages();
     fixes = prepareImagesForPdf();
