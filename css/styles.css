@@ -81,16 +81,16 @@ h1.title{
 }
 .title-page h1.title{text-align:center;}
 
-/* ── титул: надпись с линиями по краям ── */
+/* ── титул: надпись с длинными линиями по краям, как у Марии ── */
 .title-kicker{
-  display:flex;align-items:center;justify-content:center;gap:16px;
+  display:flex;align-items:center;justify-content:center;gap:18px;
   font-family:'Montserrat',sans-serif;font-size:12px;font-weight:600;
   letter-spacing:.25em;text-transform:uppercase;color:var(--muted);
   margin-bottom:14px;
 }
 .title-kicker::before,
 .title-kicker::after{
-  content:'';flex:0 0 90px;height:2px;
+  content:'';flex:0 0 150px;height:2px;
   background:var(--ink);border-radius:2px;
 }
 
@@ -107,12 +107,17 @@ h1.title{
   border-left:4px solid var(--green);
 }
 
-/* ── плашки клиента: зелёные скруглённые, как у Марии ── */
-.chips{display:flex;justify-content:center;gap:10px;margin-top:26px;}
+/* ── плашки клиента: широкие, с просветами и линиями-разделителями ── */
+.chips{display:flex;justify-content:center;gap:26px;margin-top:26px;}
 .chip{
+  position:relative;
   background:var(--green-lt);border-radius:10px;
-  padding:10px 20px;display:flex;flex-direction:column;
+  padding:12px 34px;display:flex;flex-direction:column;
   align-items:center;gap:2px;text-align:center;
+}
+.chip + .chip::before{
+  content:'';position:absolute;left:-14px;top:25%;
+  height:50%;width:1px;background:#d9dfc8;
 }
 .chip span{display:block;font-size:11px;letter-spacing:.04em;color:var(--body);}
 .chip b{color:var(--green);font-size:17px;}
@@ -187,7 +192,7 @@ h1.title{
 .author-photo{margin:-34px -48px 0 0;}          /* фото до края страницы, как в макете */
 .author-photo img{width:100%;height:100%;min-height:420px;object-fit:cover;display:block;}
 .script-name{
-  font-family:'Marck Script',cursive;font-size:40px;
+  font-family:'Babes','Marck Script',cursive;font-size:40px;
   color:var(--green);margin:-10px 0 14px;
 }
 .role{font-size:14px;line-height:1.5;}
@@ -320,9 +325,11 @@ h1.title{
   .toc-card{grid-template-columns:1fr;}
   .page-num{font-size:30px;}
   .panel-photo img{height:150px;}
-  .chips{flex-wrap:wrap;}
+  .chips{flex-wrap:wrap;gap:12px;}
+  .chip{padding:10px 20px;}
+  .chip + .chip::before{display:none;}
   .title-kicker::before,
-  .title-kicker::after{flex:0 0 40px;}
+  .title-kicker::after{flex:0 0 50px;}
 }
 
 /* ── печать ── */
@@ -336,4 +343,4 @@ h1.title{
 /* ── режим сборки PDF: отключаем то, что не понимает html2canvas ── */
 body.pdf-mode .panel-photo img{
   mix-blend-mode:normal !important;
-    }
+                       }
