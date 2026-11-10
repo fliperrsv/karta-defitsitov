@@ -16,7 +16,7 @@ const ICONS = {
   quote: `<svg viewBox="0 0 40 24" width="40" height="24" fill="#4a7c2f"><path d="M0 24V14C0 6 4 1 12 0l1 4c-4 1-6 4-6 8h7v12H0zm18 0V14c0-8 4-13 12-14l1 4c-4 1-6 4-6 8h7v12H18z"/></svg>`,
   tg: `<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#4a7c2f" stroke-width="1.8" stroke-linejoin="round"><path d="M21 3L3 11l6 2 2 6 4-5 5 3L21 3z"/></svg>`,
   ig: `<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#4a7c2f" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#4a7c2f" stroke="none"/></svg>`,
-  arrow: `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#4a7c2f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19L19 5M9 5h10v10"/></svg>`
+  arrow: `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#4a7c2f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17c5 2 10-1 12-7"/><path d="M12 9l4-2 2 4"/></svg>`,
 };
 
 const DEF_LABELS = { insufficient: "Недостаточно", significant: "Значительно снижен", severe: "Выраженный недостаток" };
