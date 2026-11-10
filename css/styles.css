@@ -294,3 +294,15 @@ body.pdf-mode .plate-sweets {
 body.pdf-mode img {
   loading: eager !important;
 }
+
+/* Режим сборки PDF: отключаем то, что не понимает html2canvas */
+body.pdf-mode .dish-photo,
+body.pdf-mode .author-photo,
+body.pdf-mode .berries-photo,
+body.pdf-mode .plate-healthy,
+body.pdf-mode .plate-sweets {
+  mix-blend-mode: normal !important;
+}
+body.pdf-mode img {
+  loading: eager !important;
+}
