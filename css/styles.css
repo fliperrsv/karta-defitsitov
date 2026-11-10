@@ -192,26 +192,40 @@ h1.title{
 .author-photo{margin:-34px -48px 0 0;}          /* фото до края страницы, как в макете */
 .author-photo img{width:100%;height:100%;min-height:420px;object-fit:cover;display:block;}
 .script-name{
-  font-family:'Babes','Marck Script',cursive;font-size:40px;
-  color:var(--green);margin:-10px 0 14px;
+  font-family:'Babes','Marck Script',cursive;
+  font-size:40px;color:var(--green);
+  text-transform:none;               /* подпись — только строчными, как в макете */
+  margin:-10px 0 14px;
+  white-space:nowrap;
+}
+.script-name::after{                /* зелёный росчерк после имени */
+  content:'';display:inline-block;
+  width:56px;height:2px;background:var(--green);
+  margin-left:14px;vertical-align:middle;border-radius:2px;
 }
 .role{font-size:14px;line-height:1.5;}
 .qmark{margin:16px 0 6px;}
-.quote{font-size:14px;font-style:italic;line-height:1.6;}
+.qmark svg{width:46px;height:28px;}
+.quote{font-size:15px;font-style:italic;line-height:1.7;}
 
 .important-row{
   display:flex;align-items:center;gap:16px;margin-top:26px;
   background:var(--pink);border-radius:12px;padding:16px 20px;
 }
 .important-label{display:flex;align-items:center;gap:10px;flex-shrink:0;}
-.important-label b{color:var(--red);font-size:16px;}
+.important-label b{color:var(--red);font-size:18px;}
 .vline{width:1px;align-self:stretch;background:#e8b8b0;}
 .important-row p{font-size:13px;}
 
 .bottom-row{
-  display:grid;grid-template-columns:1fr 1.2fr;gap:20px;
+  display:grid;grid-template-columns:1fr 1.2fr;gap:24px;
   margin-top:26px;padding-top:18px;border-top:1.5px solid var(--line);
   align-items:center;
+}
+.contacts{
+  border-right:1.5px solid #d9dfc8;   /* вертикальный разделитель, как у Марии */
+  padding-right:24px;align-self:stretch;
+  display:flex;flex-direction:column;justify-content:center;
 }
 .contacts-title{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:8px;}
 .c-line{display:flex;align-items:center;gap:8px;font-size:13px;margin-bottom:6px;}
@@ -330,6 +344,7 @@ h1.title{
   .chip + .chip::before{display:none;}
   .title-kicker::before,
   .title-kicker::after{flex:0 0 50px;}
+  .contacts{border-right:none;padding-right:0;}
 }
 
 /* ── печать ── */
@@ -343,4 +358,5 @@ h1.title{
 /* ── режим сборки PDF: отключаем то, что не понимает html2canvas ── */
 body.pdf-mode .panel-photo img{
   mix-blend-mode:normal !important;
-                       }
+            }
+       
