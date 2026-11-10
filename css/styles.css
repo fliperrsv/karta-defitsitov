@@ -15,11 +15,11 @@
   src:url('../fonts/MarkScript-Regular.ttf');
   font-weight:400;font-style:normal;font-display:swap;
 }
-@font-face{
+/*@font-face{
   font-family:'Babes';
   src:url('../fonts/Babes.ttf');
   font-weight:400;font-style:normal;font-display:swap;
-}
+}*/
 
 
 :root{
