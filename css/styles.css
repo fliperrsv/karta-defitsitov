@@ -14,7 +14,12 @@
   src:url('../fonts/MarckScript-Regular.ttf') format('truetype');
   font-weight:400;font-style:normal;font-display:swap;
 }
-
+/* Каллиграфический шрифт из макета; если файла нет — откат на Marck Script */
+@font-face{
+  font-family:'Babes';
+  src:url('../fonts/Babes.ttf') format('truetype');
+  font-weight:400;font-style:normal;font-display:swap;
+}
 
 :root{
   --cream:#f7f1e6;
