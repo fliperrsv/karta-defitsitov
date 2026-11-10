@@ -189,3 +189,5 @@ if (document.readyState === 'loading') {
 } else {
   attachButton();
 }
+/* Псевдоним для app.js, который вызывает downloadPDF */
+window.downloadPDF = buildPDF;
