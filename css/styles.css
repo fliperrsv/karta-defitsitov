@@ -1,5 +1,4 @@
 /* Локальные шрифты (папка fonts) */
-/* Локальные шрифты (папка fonts) */
 @font-face{
   font-family:'Montserrat';
   src:url('../fonts/Montserrat.ttf');
@@ -15,11 +14,12 @@
   src:url('../fonts/MarkScript-Regular.ttf');
   font-weight:400;font-style:normal;font-display:swap;
 }
-/*@font-face{
-  font-family:'Babes';
-  src:url('../fonts/Babes.ttf');
+/* Bebas Neue — заголовочный шрифт макета; официальный файл, затем Babes.ttf как запасной */
+@font-face{
+  font-family:'Bebas Neue';
+  src:url('../fonts/BebasNeue-Regular.ttf'),url('../fonts/Babes.ttf');
   font-weight:400;font-style:normal;font-display:swap;
-}*/
+}
 
 
 :root{
@@ -70,13 +70,13 @@ body{background:var(--cream);font-family:'Montserrat',sans-serif;color:var(--bod
 .head-line{flex:1;height:1.5px;background:var(--line);}
 .section{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);white-space:nowrap;}
 .page-num{
-  font-family:'Oswald',sans-serif;font-size:38px;font-weight:500;
+  font-family:'Bebas Neue','Oswald',sans-serif;font-size:38px;font-weight:400;
   color:var(--pagenum);line-height:1;flex-shrink:0;
 }
 
 /* ── заголовок страницы: navy, влево, крупно ── */
 h1.title{
-  font-family:'Oswald',sans-serif;font-weight:700;
+  font-family:'Bebas Neue','Oswald',sans-serif;font-weight:400;
   font-size:58px;line-height:1.0;text-transform:uppercase;
   color:var(--ink);text-align:left;letter-spacing:.01em;
 }
@@ -96,7 +96,7 @@ h1.title{
 }
 
 .client-name{
-  font-family:'Oswald',sans-serif;font-weight:400;
+  font-family:'Bebas Neue','Oswald',sans-serif;font-weight:400;
   font-size:34px;color:var(--ink);text-align:center;margin-top:8px;
 }
 
@@ -150,7 +150,7 @@ h1.title{
 .panel-head{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
 .panel-head.tight{gap:8px;}
 .panel-title{
-  font-family:'Oswald',sans-serif;font-size:20px;font-weight:600;
+  font-family:'Bebas Neue','Oswald',sans-serif;font-size:20px;font-weight:400;
   text-transform:uppercase;color:var(--ink);
 }
 .panel-title.sm{font-size:16px;}
@@ -193,9 +193,9 @@ h1.title{
 .author-photo{margin:-34px -48px 0 0;}          /* фото до края страницы, как в макете */
 .author-photo img{width:100%;height:100%;min-height:420px;object-fit:cover;display:block;}
 .script-name{
-  font-family:'Babes','Marck Script',cursive;
+  font-family:'Marck Script',cursive;
   font-size:40px;color:var(--green);
-  text-transform:none;               /* подпись — только строчными, как в макете */
+  text-transform:none;               /* подпись — рукописная, без капса */
   margin:-10px 0 14px;
   white-space:nowrap;
 }
@@ -236,7 +236,7 @@ h1.title{
 }
 .qr-t{font-size:13px;font-weight:700;color:var(--green);}
 .qr-n{font-size:11.5px;color:var(--body);margin-top:3px;}
-.qr-arrow{margin-left:auto;flex-shrink:0;}
+.qr-arrow{align-self:flex-end;margin:0 6px 10px auto;flex-shrink:0;}
 .qr-code{width:74px;height:74px;flex-shrink:0;background:#fff;border-radius:8px;padding:5px;}
 .qr-code img{width:100%;height:100%;display:block;}
 
@@ -250,10 +250,10 @@ h1.title{
   padding:20px 22px;margin-bottom:16px;
 }
 .toc-left{display:flex;gap:12px;align-items:flex-start;}
-.toc-num{font-family:'Oswald',sans-serif;font-size:44px;font-weight:600;color:var(--green);line-height:1;}
+.toc-num{font-family:'Bebas Neue','Oswald',sans-serif;font-size:44px;font-weight:400;color:var(--green);line-height:1;}
 .toc-bar{width:3px;align-self:stretch;background:var(--green);border-radius:2px;}
 .toc-part-title{
-  font-family:'Oswald',sans-serif;font-size:19px;font-weight:600;
+  font-family:'Bebas Neue','Oswald',sans-serif;font-size:19px;font-weight:400;
   text-transform:uppercase;color:var(--ink);line-height:1.15;padding-top:4px;
 }
 .toc-desc{font-size:12.5px;color:var(--body);}
@@ -281,7 +281,7 @@ h1.title{
 .analyses{margin-top:22px;}
 .analysis{display:flex;gap:16px;margin-bottom:18px;}
 .analysis-num{
-  font-family:'Oswald',sans-serif;font-size:22px;font-weight:600;
+  font-family:'Bebas Neue','Oswald',sans-serif;font-size:22px;font-weight:400;
   color:var(--green);min-width:34px;height:34px;
   border:1.5px solid var(--green);border-radius:50%;
   display:flex;align-items:center;justify-content:center;flex-shrink:0;
@@ -296,7 +296,7 @@ h1.title{
 .card{background:var(--cream);border-radius:var(--radius);padding:20px 22px;}
 .card.deficit.full{grid-column:1 / -1;}
 .deficit-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:8px;}
-.deficit-name{font-family:'Oswald',sans-serif;font-size:19px;font-weight:600;text-transform:uppercase;color:var(--ink);}
+.deficit-name{font-family:'Bebas Neue','Oswald',sans-serif;font-size:19px;font-weight:400;text-transform:uppercase;color:var(--ink);}
 .badge{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:5px 10px;border-radius:20px;white-space:nowrap;flex-shrink:0;}
 .badge.insufficient,.badge.elevated{background:var(--green-lt);color:var(--green);}
 .badge.significant,.badge.high{background:#f7ecd0;color:#9a7b1e;}
@@ -359,5 +359,5 @@ h1.title{
 /* ── режим сборки PDF: отключаем то, что не понимает html2canvas ── */
 body.pdf-mode .panel-photo img{
   mix-blend-mode:normal !important;
-            }
-       
+    }
+  
