@@ -49,7 +49,10 @@ function shell(title, kicker, inner, opts = {}) {
 /* ── 01: титул ── */
 function page01() {
   const c = report.client;
-  return shell(report.pagesTitles[0], '', `
+  return `
+  <section class="page title-page">
+    <div class="title-kicker">Персональный анализ питания</div>
+    <h1 class="title">${esc(report.pagesTitles[0])}</h1>
     <div class="client-name">${esc(c.name)}</div>
     <div class="chips">
       <div class="chip"><span>Возраст:</span><b>${esc(c.age)}</b></div>
@@ -61,7 +64,8 @@ function page01() {
     <p class="lead italic">${esc(report.intro2)}</p>
     <div class="callout green"><b>Карта поможет</b> увидеть особенности вашего рациона, определить недостаточное и избыточное поступление питательных веществ и получить последовательный план коррекции питания.</div>
     <figure class="photo"><img src="assets/photo.jpg" alt="Блюдо с лососем и овощами"></figure>
-  `, { noHead: true });
+    <div class="page-end"><span></span></div>
+  </section>`;
 }
 
 /* ── 02: об авторе ── */
@@ -289,3 +293,4 @@ function render() {
 render();
 
 document.getElementById('btn-pdf').addEventListener('click', downloadPDF);
+                             
