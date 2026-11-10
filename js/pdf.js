@@ -60,7 +60,7 @@ async function buildPDF() {
   const statusEl = document.getElementById('pdf-status');
   const setStatus = (text) => { if (statusEl) statusEl.textContent = text; };
 
-  const btn = document.getElementById('download-pdf');
+  const btn = document.getElementById('btn-pdf');
   if (btn) btn.disabled = true;
 
   document.body.classList.add('pdf-mode');
@@ -106,7 +106,7 @@ async function buildPDF() {
       const x = (pageW - w) / 2;
       const y = 0;
 
-      doc.addImage(imgData, 'JPEG', x, y, w, h);
+      doc.addImage(imgData, 'JPG', x, y, w, h);
     }
 
     setStatus('Сохранение файла…');
@@ -129,6 +129,6 @@ async function buildPDF() {
 
 /* ── Подключение кнопки ── */
 document.addEventListener('DOMContentLoaded', () => {
-  const btn = document.getElementById('download-pdf');
+  const btn = document.getElementById('btn-pdf');
   if (btn) btn.addEventListener('click', buildPDF);
 });
