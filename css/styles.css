@@ -283,3 +283,14 @@ h1.title{
   .page{box-shadow:none;margin:0;border-radius:0;max-width:100%;page-break-after:always;}
   .page:last-child{page-break-after:auto;}
 }
+/* Режим сборки PDF: отключаем то, что не понимает html2canvas */
+body.pdf-mode .dish-photo,
+body.pdf-mode .author-photo,
+body.pdf-mode .berries-photo,
+body.pdf-mode .plate-healthy,
+body.pdf-mode .plate-sweets {
+  mix-blend-mode: normal !important;
+}
+body.pdf-mode img {
+  loading: eager !important;
+}
