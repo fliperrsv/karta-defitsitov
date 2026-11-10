@@ -1,19 +1,37 @@
 /* ============================================================
-   Карта дефицитов — сборка PDF
-   Требования: html2canvas + jsPDF (локально в корне или с CDN)
+   Карта дефицитов — сборка PDF (финальная версия)
    ============================================================ */
 
 const HTML2CANVAS_SRC = [
-  'html2canvas.min.js',
+  'js/vendor/html2canvas.min.js',
   'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js'
 ];
 
 const JSPDF_SRC = [
-  'jspdf.umd.min.js',
+  'js/vendor/jspdf.umd.min.js',
   'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js'
 ];
 
-/* ── Загрузчик внешних скриптов с резервными адресами ── */
+/* ── Плашка статуса и ошибок ── */
+function getStatusEl() {
+  let el = document.getElementById('pdf-status');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'pdf-status';
+    el.style.cssText = 'position:fixed;left:16px;right:16px;bottom:16px;' +
+      'background:#1e2a44;color:#fff;padding:10px 14px;border-radius:10px;' +
+      'font:14px sans-serif;z-index:9999;display:none;text-align:center;';
+    document.body.appendChild(el);
+  }
+  return el;
+}
+function setStatus(text) { const el = getStatusEl(); el.textContent = text; el.style.display = 'block'; }
+function hideStatus() { const el = getStatusEl(); el.style.display = 'none'; }
+
+window.addEventListener('error', (e) => {
+  if (e && e.message) setStatus('Ошибка: ' + e.message);
+});
+
 function loadScript(srcList) {
   return srcList.reduce((chain, src) => chain.catch(() => new Promise((resolve, reject) => {
     const s = document.createElement('script');
@@ -24,32 +42,73 @@ function loadScript(srcList) {
   })), Promise.reject());
 }
 
-/* ── Дождаться загрузки всех картинок внутри отчёта ── */
+/* ── Дождаться загрузки всех картинок ── */
 function waitForImages() {
   const imgs = Array.from(document.querySelectorAll('.page img'));
   return Promise.all(imgs.map(img => {
     img.loading = 'eager';
     if (img.complete && img.naturalWidth > 0) return Promise.resolve();
-    return new Promise(resolve => {
-      img.onload = resolve;
-      img.onerror = resolve; // битая картинка не должна вешать сборку
-    });
+    return new Promise(resolve => { img.onload = resolve; img.onerror = resolve; });
   }));
 }
 
-/* ── Снять одну страницу в canvas, с одной повторной попыткой ── */
+/* ── Подготовка картинок к захвату ──
+   html2canvas не поддерживает object-fit: cover (фото растягивалось)
+   и mix-blend-mode (фото пропадало). Заменяем <img> на div с
+   background-size: cover — это html2canvas рисует правильно.
+   Заодно конвертируем <canvas> (QR-код) в <img>. */
+function prepareImagesForPdf() {
+  const fixes = [];
+
+  document.querySelectorAll('.page canvas').forEach(cv => {
+    try {
+      const dataUrl = cv.toDataURL('image/png');
+      const img = document.createElement('img');
+      img.src = dataUrl;
+      img.className = cv.className;
+      img.style.cssText = cv.style.cssText;
+      cv.parentNode.insertBefore(img, cv);
+      cv.style.display = 'none';
+      fixes.push({ canvas: cv, imgEl: img });
+    } catch (e) { /* холст без содержимого — пропускаем */ }
+  });
+
+  document.querySelectorAll('.page img').forEach(img => {
+    const src = img.currentSrc || img.src || '';
+    if (!src) return;
+    const holder = document.createElement('div');
+    holder.className = img.className;
+    holder.style.cssText = img.style.cssText;
+    holder.style.backgroundImage = 'url("' + src + '")';
+    holder.style.backgroundSize = 'cover';
+    holder.style.backgroundPosition = 'center';
+    holder.style.backgroundRepeat = 'no-repeat';
+    img.parentNode.insertBefore(holder, img);
+    img.style.display = 'none';
+    fixes.push({ img, holder });
+  });
+
+  return fixes;
+}
+
+function restoreImages(fixes) {
+  fixes.forEach(f => {
+    if (f.canvas) {
+      f.canvas.style.display = '';
+      if (f.imgEl) f.imgEl.remove();
+    } else {
+      f.img.style.display = '';
+      if (f.holder) f.holder.remove();
+    }
+  });
+}
+
+/* ── Снять страницу в canvas, с повторной попыткой ── */
 async function capturePage(pageEl, scale) {
-  const options = {
-    scale: scale,
-    useCORS: true,
-    allowTaint: false,
-    backgroundColor: '#ffffff',
-    logging: false
-  };
+  const options = { scale: scale, useCORS: true, allowTaint: false, backgroundColor: '#ffffff', logging: false };
   try {
     return await html2canvas(pageEl, options);
   } catch (e) {
-    // вторая попытка: бывает, первый захват падает на ещё не отрисованных шрифтах
     await new Promise(r => setTimeout(r, 300));
     return await html2canvas(pageEl, options);
   }
@@ -57,78 +116,76 @@ async function capturePage(pageEl, scale) {
 
 /* ── Основная сборка ── */
 async function buildPDF() {
-  const statusEl = document.getElementById('pdf-status');
-  const setStatus = (text) => { if (statusEl) statusEl.textContent = text; };
-
-  const btn = document.getElementById('btn-pdf');
+  const btn = document.querySelector('#btn-pdf, #download-pdf, [data-action="download-pdf"]');
   if (btn) btn.disabled = true;
 
   document.body.classList.add('pdf-mode');
   setStatus('Подготовка…');
 
+  let fixes = [];
   try {
-    // библиотеки
     if (typeof html2canvas === 'undefined') await loadScript(HTML2CANVAS_SRC);
-    if (typeof html2canvas === 'undefined') throw new Error('Не загрузился html2canvas');
-    const { jsPDF } = window.jspdf || {};
-    if (!jsPDF) await loadScript(JSPDF_SRC);
+    if (typeof html2canvas === 'undefined') throw new Error('не загрузился html2canvas');
+    if (!window.jspdf || !window.jspdf.jsPDF) await loadScript(JSPDF_SRC);
+    const jsPDF = window.jspdf && window.jspdf.jsPDF;
+    if (!jsPDF) throw new Error('не загрузился jsPDF');
 
-    // ждём картинки, пока включён pdf-mode (без mix-blend-mode)
     await waitForImages();
+    fixes = prepareImagesForPdf();
 
     const pages = Array.from(document.querySelectorAll('.page'));
-    if (!pages.length) throw new Error('Страницы отчёта не найдены');
+    if (!pages.length) throw new Error('страницы .page не найдены');
 
     const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
     const pageW = doc.internal.pageSize.getWidth();
     const pageH = doc.internal.pageSize.getHeight();
 
-    let first = true;
-    let skipped = 0;
+    let first = true, skipped = 0;
 
     for (let i = 0; i < pages.length; i++) {
       setStatus(`Сборка ${i + 1} из ${pages.length}…`);
-
       const canvas = await capturePage(pages[i], 2);
-      if (!canvas || canvas.width < 10 || canvas.height < 10) {
-        skipped++;
-        continue; // пустой лист вместо сорвавшейся страницы не вставляем
-      }
-
+      if (!canvas || canvas.width < 10 || canvas.height < 10) { skipped++; continue; }
       const imgData = canvas.toDataURL('image/jpeg', 0.92);
       if (!first) doc.addPage();
       first = false;
-
-      // вписываем по высоте, сохраняя пропорции
       const ratio = Math.min(pageW / canvas.width, pageH / canvas.height);
-      const w = canvas.width * ratio;
-      const h = canvas.height * ratio;
-      const x = (pageW - w) / 2;
-      const y = 0;
-
-      doc.addImage(imgData, 'JPG', x, y, w, h);
+      const w = canvas.width * ratio, h = canvas.height * ratio;
+      doc.addImage(imgData, 'JPEG', (pageW - w) / 2, 0, w, h);
     }
 
     setStatus('Сохранение файла…');
     doc.save('Карта_дефицитов.pdf');
-
-    if (skipped > 0) {
-      setStatus(`Готово, но ${skipped} страниц(ы) не удалось снять — обновите страницу и повторите.`);
-    } else {
-      setStatus('Готово! PDF скачан.');
-    }
+    setStatus(skipped ? `Готово, но ${skipped} страниц не снялось — повторите сборку.` : 'Готово! PDF скачан.');
+    setTimeout(hideStatus, 4000);
 
   } catch (err) {
     console.error(err);
-    setStatus('Ошибка сборки: ' + (err && err.message ? err.message : 'неизвестная') + '. Обновите страницу и попробуйте ещё раз.');
+    setStatus('Ошибка сборки: ' + (err && err.message ? err.message : 'неизвестная'));
   } finally {
+    restoreImages(fixes);
     document.body.classList.remove('pdf-mode');
     if (btn) btn.disabled = false;
   }
 }
 
-/* ── Подключение кнопки ── */
-document.addEventListener('DOMContentLoaded', () => {
-  const btn = document.getElementById('btn-pdf');
-  if (btn) btn.addEventListener('click', buildPDF);
-});
+/* ── Подключение кнопки: по id, data-атрибуту и по тексту ── */
+function attachButton() {
+  let btn = document.querySelector('#btn-pdf, #download-pdf, [data-action="download-pdf"]');
+
+  if (!btn) {
+    const candidates = Array.from(document.querySelectorAll('button, a, div[role="button"], .btn'));
+    btn = candidates.find(el => /скачать\s*pdf|download\s*pdf/i.test(el.textContent || ''));
+  }
+
+  if (btn && !btn.dataset.pdfBound) {
+    btn.dataset.pdfBound = '1';
+    btn.addEventListener('click', (e) => { e.preventDefault(); buildPDF(); });
+  }
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', attachButton);
+} else {
+  attachButton();
+}
