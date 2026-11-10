@@ -56,7 +56,9 @@ function waitForImages() {
    html2canvas не поддерживает object-fit: cover (фото растягивалось)
    и mix-blend-mode (фото пропадало). Заменяем <img> на div с
    background-size: cover — это html2canvas рисует правильно.
-   Заодно конвертируем <canvas> (QR-код) в <img>. */
+   Размеры копируем из оригинала, иначе div схлопнется в ноль
+   (селекторы CSS вида .photo img { height: ... } на div не действуют).
+   Заодно конвертируем <canvas> (QR-код) в <img> с явными размерами. */
 function prepareImagesForPdf() {
   const fixes = [];
 
@@ -66,23 +68,32 @@ function prepareImagesForPdf() {
       const img = document.createElement('img');
       img.src = dataUrl;
       img.className = cv.className;
-      img.style.cssText = cv.style.cssText;
+      const r = cv.getBoundingClientRect();
+      img.style.display = 'block';
+      img.style.width = r.width + 'px';
+      img.style.height = r.height + 'px';
       cv.parentNode.insertBefore(img, cv);
       cv.style.display = 'none';
       fixes.push({ canvas: cv, imgEl: img });
-    } catch (e) { /* холст без содержимого — пропускаем */ }
+    } catch (e) { /* пустой холст — пропускаем */ }
   });
 
   document.querySelectorAll('.page img').forEach(img => {
     const src = img.currentSrc || img.src || '';
     if (!src) return;
+    const cs = getComputedStyle(img);
+    const r = img.getBoundingClientRect();
     const holder = document.createElement('div');
     holder.className = img.className;
-    holder.style.cssText = img.style.cssText;
+    holder.style.display = 'block';
+    holder.style.width = r.width + 'px';
+    holder.style.height = r.height + 'px';
     holder.style.backgroundImage = 'url("' + src + '")';
     holder.style.backgroundSize = 'cover';
     holder.style.backgroundPosition = 'center';
     holder.style.backgroundRepeat = 'no-repeat';
+    holder.style.borderRadius = cs.borderRadius;
+    holder.style.overflow = 'hidden';
     img.parentNode.insertBefore(holder, img);
     img.style.display = 'none';
     fixes.push({ img, holder });
@@ -189,5 +200,6 @@ if (document.readyState === 'loading') {
 } else {
   attachButton();
 }
+
 /* Псевдоним для app.js, который вызывает downloadPDF */
 window.downloadPDF = buildPDF;
