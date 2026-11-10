@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Карта дефицитов — персональный анализ питания</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Marck+Script&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Кнопка редактора -->
+  <div class="editor-bar no-print">
+    <button id="btn-editor" type="button">Редактор отчёта</button>
+  </div>
+
+  <!-- Редактор отчёта -->
+  <div id="editor" class="editor no-print" style="display:none">
+    <h2>Данные клиентки</h2>
+    <div class="form-row-4">
+      <label>Имя <input id="f-name"></label>
+      <label>Возраст <input id="f-age"></label>
+      <label>Рост <input id="f-height"></label>
+      <label>Вес <input id="f-weight"></label>
+      <label>ИМТ <input id="f-imt"></label>
+    </div>
+
+    <h2>Сильные стороны <small>страница 04, один пункт — одна строка</small></h2>
+    <textarea id="f-strengths" rows="5"></textarea>
+
+    <h2>Слабые стороны — основной рацион</h2>
+    <textarea id="f-w-main" rows="3"></textarea>
+
+    <h2>Слабые стороны — избытки</h2>
+    <textarea id="f-w-excess" rows="3"></textarea>
+
+    <h2>Слабые стороны — дефициты</h2>
+    <textarea id="f-w-def" rows="3"></textarea>
+
+    <h2>Карточки страницы 05 <small>«Энергия / Баланс / Витамины»</small></h2>
+    <div id="f-resources"></div>
+
+    <h2>Вердикт ресурсной базы</h2>
+    <label>Заголовок <input id="f-verdict-title"></label>
+    <label>Текст <textarea id="f-verdict-text" rows="3"></textarea></label>
+
+    <h2>Главные избытки (страница 06)</h2>
+    <div id="f-excesses"></div>
+    <button type="button" class="add-btn" data-add="excesses">+ Добавить избыток</button>
+
+    <h2>Главные дефициты (страница 07)</h2>
+    <label>Вводный текст страницы
+      <textarea id="f-def-intro" rows="2"></textarea></label>
+    <div id="f-deficits"></div>
+    <button type="button" class="add-btn" data-add="deficits">+ Добавить дефицит</button>
+
+    <h2>План восстановления (страница 08)</h2>
+    <label>Вводный текст <textarea id="f-plan-lead" rows="2"></textarea></label>
+    <label>Основной текст <textarea id="f-plan-text" rows="3"></textarea></label>
+
+    <h2>Шаг 1. Стратегия питания <small>строки — пункты</small></h2>
+    <label>Вводный текст <textarea id="f-step1-lead" rows="2"></textarea></label>
+    <textarea id="f-step1" rows="4"></textarea>
+
+    <h2>Шаг 2. Что добавить в питание</h2>
+    <label>Вводный текст <textarea id="f-step2-lead" rows="2"></textarea></label>
+    <textarea id="f-step2" rows="4"></textarea>
+
+    <h2>Шаг 3. Лабораторная диагностика <small>анализы</small></h2>
+    <div id="f-analyses"></div>
+    <button type="button" class="add-btn" data-add="analyses">+ Добавить анализ</button>
+
+    <h2>Шаг 4. Коррекция с помощью добавок</h2>
+    <label>Вводный текст <textarea id="f-step4-lead" rows="2"></textarea></label>
+    <textarea id="f-step4" rows="4"></textarea>
+
+    <h2>Список рекомендаций</h2>
+    <label>Вводный текст <textarea id="f-rec-lead" rows="2"></textarea></label>
+    <textarea id="f-rec" rows="4"></textarea>
+
+    <h2>Как работать с дефицитами</h2>
+    <label>Вводный текст <textarea id="f-work-lead" rows="2"></textarea></label>
+    <textarea id="f-work" rows="4"></textarea>
+
+    <h2>Следующий шаг</h2>
+    <label>Вводный текст <textarea id="f-next-lead" rows="2"></textarea></label>
+    <textarea id="f-next" rows="4"></textarea>
+
+    <div class="editor-actions">
+      <button type="button" id="btn-apply">Собрать отчёт</button>
+      <button type="button" id="btn-reset" class="ghost">Сбросить к демо</button>
+    </div>
+  </div>
+
+  <!-- Кнопка PDF -->
+  <div class="toolbar no-print">
+    <button id="btn-pdf" type="button">Скачать PDF</button>
+  </div>
+
+  <!-- Отчёт -->
+  <main id="report"></main>
+
+  <!-- Файлы проекта — порядок важен -->
+  <script src="js/data.js"></script>
+  <script src="js/pdf.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/editor.js"></script>
+</body>
+</html>
