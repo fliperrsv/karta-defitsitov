@@ -156,9 +156,9 @@ function page04() {
 /* ── 05: как питание влияет на ресурс ── */
 function page05() {
   const meta = [
-    { icon: 'flame',  cls: 'peach-panel' },
-    { icon: 'scales', cls: 'green-panel' },
-    { icon: 'pill',   cls: 'green-panel' }
+    { icon: 'flame',  cls: 'res-1' },
+    { icon: 'scales', cls: 'res-2' },
+    { icon: 'pill',   cls: 'res-3' }
   ];
   return shell(report.pagesTitles[4], 'Анализ питания', `
     <p class="plain-lead">Насколько рацион сбалансирован и как он влияет на ресурсный баланс организма.</p>
@@ -317,3 +317,4 @@ setTimeout(renderQR, 500);
 setTimeout(renderQR, 1500);
 
 document.getElementById('btn-pdf').addEventListener('click', downloadPDF);
+                                  
