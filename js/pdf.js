@@ -1,5 +1,6 @@
 /* ============================================================
    Карта дефицитов — сборка PDF (финальная версия)
+   Все страницы одной ширины 210 мм, высота листа — по контенту.
    ============================================================ */
 
 const HTML2CANVAS_SRC = [
@@ -11,6 +12,9 @@ const JSPDF_SRC = [
   'js/vendor/jspdf.umd.min.js',
   'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js'
 ];
+
+/* Ширина листа PDF в мм — одинакова для всех страниц */
+const PAGE_W_MM = 210;
 
 /* ── Плашка статуса и ошибок ── */
 function getStatusEl() {
@@ -56,8 +60,7 @@ function waitForImages() {
    html2canvas не поддерживает object-fit: cover (фото растягивалось)
    и mix-blend-mode (фото пропадало). Заменяем <img> на div с
    background-size: cover — это html2canvas рисует правильно.
-   Размеры копируем из оригинала, иначе div схлопнется в ноль
-   (селекторы CSS вида .photo img { height: ... } на div не действуют).
+   Размеры копируем из оригинала, иначе div схлопнется в ноль.
    Заодно конвертируем <canvas> (QR-код) в <img> с явными размерами. */
 function prepareImagesForPdf() {
   const fixes = [];
@@ -141,7 +144,6 @@ async function buildPDF() {
     const jsPDF = window.jspdf && window.jspdf.jsPDF;
     if (!jsPDF) throw new Error('не загрузился jsPDF');
     if (document.fonts && document.fonts.ready) await document.fonts.ready;
-     
 
     await waitForImages();
     fixes = prepareImagesForPdf();
@@ -149,23 +151,29 @@ async function buildPDF() {
     const pages = Array.from(document.querySelectorAll('.page'));
     if (!pages.length) throw new Error('страницы .page не найдены');
 
-    const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
-    const pageW = doc.internal.pageSize.getWidth();
-    const pageH = doc.internal.pageSize.getHeight();
-
-    let first = true, skipped = 0;
+    let doc = null, first = true, skipped = 0;
 
     for (let i = 0; i < pages.length; i++) {
       setStatus(`Сборка ${i + 1} из ${pages.length}…`);
       const canvas = await capturePage(pages[i], 2);
       if (!canvas || canvas.width < 10 || canvas.height < 10) { skipped++; continue; }
+
       const imgData = canvas.toDataURL('image/jpeg', 0.92);
-      if (!first) doc.addPage();
-      first = false;
-      const ratio = Math.min(pageW / canvas.width, pageH / canvas.height);
-      const w = canvas.width * ratio, h = canvas.height * ratio;
-      doc.addImage(imgData, 'JPEG', (pageW - w) / 2, 0, w, h);
+
+      /* Высота листа пропорциональна снятой странице —
+         ширина всегда 210 мм, масштаб одинаковый у всех страниц */
+      const hMM = PAGE_W_MM * canvas.height / canvas.width;
+
+      if (first) {
+        doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: [PAGE_W_MM, hMM] });
+        first = false;
+      } else {
+        doc.addPage([PAGE_W_MM, hMM], 'portrait');
+      }
+      doc.addImage(imgData, 'JPEG', 0, 0, PAGE_W_MM, hMM);
     }
+
+    if (!doc) throw new Error('ни одну страницу не удалось снять');
 
     setStatus('Сохранение файла…');
     doc.save('Карта_дефицитов.pdf');
