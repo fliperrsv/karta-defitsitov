@@ -124,7 +124,7 @@ function page03() {
     <p class="toc-intro"><b>${esc(report.toc.introBold)}</b> ${esc(report.toc.introRest)}</p>
     <p class="toc-intro2">${esc(report.toc.introSplit)}</p>
     <div class="toc">${parts}</div>
-    <figure class="deco-photo"><img src="assets/berries.jpg" alt="Черника"></figure>
+    <figure class="deco-photo"><img src="assets/berries.png" alt="Черника"></figure>
   `);
 }
 
