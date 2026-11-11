@@ -398,11 +398,20 @@ h1.title{
 @media print{
   body{background:#fff;}
   .no-print{display:none !important;}
-  .page{box-shadow:none;margin:0;border-radius:0;max-width:100%;page-break-after:always;}
+  .page{box-shadow:none;margin:0;border-radius:0;max-width:100%;page-break-after:always;overflow:hidden;}
   .page:last-child{page-break-after:auto;}
 }
 
 /* ── режим сборки PDF ── */
+/* все страницы жёстко одной ширины A4 и одинаковой высоты —
+   чтобы сборщик не масштабировал их по-разному */
+body.pdf-mode .page{
+  width:794px;           /* A4 при 96dpi */
+  max-width:none;
+  min-height:1123px;
+  overflow:hidden;
+}
 body.pdf-mode .panel-photo img{
   mix-blend-mode:normal !important;
-                   }
+  }
+    
