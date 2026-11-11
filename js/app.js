@@ -290,17 +290,26 @@ function render() {
 }
 render();
 
-/* QR-код локально, без внешних сервисов */
+/* ── QR-код: локальная библиотека, с запасной картинкой ── */
 function renderQR(){
   const box = document.getElementById('qr-box');
-  if (!box || typeof qrcode === 'undefined') return;
-  const q = qrcode(0, 'M');
-  q.addData('https://t.me/myfocus_club');
-  q.make();
-  box.innerHTML = q.createTableTag({ cellSize: 2, margin: 0 });
+  if (!box || box.innerHTML) return;                 // контейнера нет или QR уже нарисован
+  try{
+    if (typeof qrcode !== 'undefined'){              // локальная библиотека на месте
+      const q = qrcode(0, 'M');
+      q.addData('https://t.me/myfocus_club');
+      q.make();
+      box.innerHTML = q.createTableTag(2, 0);        // таблица — надёжно для html2canvas
+    } else {                                         // библиотеки нет — внешняя картинка
+      box.innerHTML = '<img src="https://quickchart.io/qr?size=200&text=https://t.me/myfocus_club" alt="QR-код">';
+    }
+  }catch(e){
+    box.innerHTML = '<img src="https://quickchart.io/qr?size=200&text=https://t.me/myfocus_club" alt="QR-код">';
+  }
 }
 renderQR();
-
+document.addEventListener('DOMContentLoaded', renderQR);
+setTimeout(renderQR, 500);
+setTimeout(renderQR, 1500);
 
 document.getElementById('btn-pdf').addEventListener('click', downloadPDF);
-                             
