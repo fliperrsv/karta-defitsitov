@@ -254,22 +254,22 @@ h1.title{
 .toc-intro2{font-size:16px;margin-top:8px;}
 .toc{margin-top:22px;position:relative;z-index:1;}
 .toc-card{
-  display:grid;grid-template-columns:230px 1fr;gap:22px;
+  display:grid;grid-template-columns:260px 1fr;gap:22px;
   background:var(--sage);border-radius:var(--radius);
   padding:20px 22px;margin-bottom:16px;
 }
-.toc-left{display:flex;gap:14px;align-items:flex-start;}
+/* полоска — на правом краю левой колонки, между названием и описанием, во всю высоту */
+.toc-left{position:relative;display:flex;gap:14px;align-items:flex-start;padding-right:14px;}
 .toc-num{
   font-family:'Bebas Neue','Oswald',sans-serif;font-size:46px;font-weight:400;
   color:var(--green);line-height:0.9;flex-shrink:0;
 }
-/* полоска только у цифры: высота с блоком «цифра + название», вниз не тянется */
 .toc-bar{
-  width:3px;height:58px;background:var(--green);
-  border-radius:2px;flex-shrink:0;margin-top:3px;
+  position:absolute;right:0;top:0;bottom:0;
+  width:3px;background:var(--green);border-radius:2px;
 }
 .toc-part-title{
-  font-family:'Montserrat',sans-serif;font-size:20px;font-weight:800;
+  font-family:'Montserrat',sans-serif;font-size:17px;font-weight:800;
   text-transform:uppercase;color:var(--ink);line-height:1.15;padding-top:2px;
 }
 .toc-desc{font-size:14px;color:var(--body);}
@@ -357,6 +357,8 @@ h1.title{
   .author-photo{margin:0;border-radius:12px;overflow:hidden;}
   .author-photo img{min-height:240px;}
   .toc-card{grid-template-columns:1fr;}
+  .toc-left{padding-right:0;}
+  .toc-bar{display:none;}
   .page-num{font-size:30px;}
   .panel-photo img{height:150px;}
   .chips{flex-wrap:wrap;gap:12px;}
@@ -379,4 +381,4 @@ h1.title{
 /* ── режим сборки PDF ── */
 body.pdf-mode .panel-photo img{
   mix-blend-mode:normal !important;
-}
+  }
