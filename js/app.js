@@ -98,9 +98,7 @@ function page02() {
           <div class="qr-n">${esc(a.qrNote)}</div>
         </div>
         <span class="qr-arrow">${ICONS.arrow}</span>
-        <div class="qr-code">
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://t.me/myfocus_club" alt="QR-код">
-        </div>
+          <div class="qr-code" id="qr-box"></div>
       </div>
     </div>
   `);
