@@ -9,7 +9,7 @@ const ICONS = {
   sprout: `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M12 21v-8"/><path d="M12 13C12 9 9 7 5 7c0 4 3 6 7 6z" fill="#fff" stroke="none"/><path d="M12 11c0-3 2.5-5 6-5 0 3-2.5 5-6 5z" fill="#fff" stroke="none"/></svg>`,
   check: `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>`,
   warn: `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#e8a33d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L2 21h20L12 3z"/><line x1="12" y1="10" x2="12" y2="15"/><circle cx="12" cy="18" r="0.6" fill="#e8a33d"/></svg>`,
-  flame: `<svg viewBox="0 0 24 24" width="20" height="20" fill="#e8543a"><path d="M12 2c1 4-4 5-4 10a4 4 0 0 0 8 0c0-2-1-3-1-3s3 1 3 4a6 6 0 0 1-12 0C6 8 11 7 12 2z"/></svg>`,
+  flame: `<svg viewBox="0 0 24 24" width="20" height="20" fill="#fff"><path d="M12 2c1 4-4 5-4 10a4 4 0 0 0 8 0c0-2-1-3-1-3s3 1 3 4a6 6 0 0 1-12 0C6 8 11 7 12 2z"/></svg>`,
   scales: `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M12 4v16M6 20h12M12 6l-5 5 2.5 4h5L17 11 12 6z"/></svg>`,
   pill: `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#fff" stroke-width="2"><rect x="4" y="9" width="16" height="7" rx="3.5" transform="rotate(-30 12 12)"/><line x1="10" y1="8" x2="14" y2="14"/></svg>`,
   alert: `<svg viewBox="0 0 40 40" width="40" height="40"><circle cx="20" cy="20" r="18" fill="#e8543a"/><text x="20" y="27" font-size="20" font-weight="bold" fill="#fff" text-anchor="middle" font-family="Georgia">!</text></svg>`,
@@ -317,4 +317,3 @@ setTimeout(renderQR, 500);
 setTimeout(renderQR, 1500);
 
 document.getElementById('btn-pdf').addEventListener('click', downloadPDF);
-                                  
