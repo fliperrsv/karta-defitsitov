@@ -21,7 +21,6 @@
   font-weight:400;font-style:normal;font-display:swap;
 }
 
-
 :root{
   --cream:#f7f1e6;
   --paper:#ffffff;
@@ -30,7 +29,7 @@
   --muted:#8a8f7e;
   --green:#4a7c2f;
   --green-lt:#e9f0dc;     /* светло-зелёные плашки */
-  --sage:#eeebe0;         /* приглушённые плашки содержания, как в макете */
+  --sage:#edeade;         /* приглушённые плашки содержания, как в макете */
   --peach:#fdf3e7;        /* персиковые карточки */
   --pink:#fdecea;         /* розовые блоки «Важно» */
   --red:#e8543a;
@@ -83,7 +82,7 @@ h1.title{
 }
 .title-page h1.title{text-align:center;}
 
-/* ── титул: надпись с длинными линиями по краям, как у Марии ── */
+/* ── титул: надпись с длинными линиями по краям ── */
 .title-kicker{
   display:flex;align-items:center;justify-content:center;gap:18px;
   font-family:'Montserrat',sans-serif;font-size:12px;font-weight:600;
@@ -109,7 +108,7 @@ h1.title{
   border-left:4px solid var(--green);
 }
 
-/* ── плашки клиента: широкие, с просветами и линиями-разделителями ── */
+/* ── плашки клиента ── */
 .chips{display:flex;justify-content:center;gap:26px;margin-top:26px;}
 .chip{
   position:relative;
@@ -124,7 +123,7 @@ h1.title{
 .chip span{display:block;font-size:11px;letter-spacing:.04em;color:var(--body);}
 .chip b{color:var(--green);font-size:17px;}
 
-/* ── callout: полоска внутри плашки, с отступом от края ── */
+/* ── callout ── */
 .callout{
   border-radius:10px;padding:16px 20px;margin-top:24px;font-size:14px;
 }
@@ -140,17 +139,17 @@ h1.title{
 
 .photo{margin-top:26px;}
 .photo img{width:100%;max-height:400px;object-fit:cover;object-position:center;border-radius:8px;display:block;}
+
+/* черника: прозрачный PNG в левом нижнем углу, под третьей карточкой */
 .deco-photo{
   position:relative;z-index:0;
-  margin:-110px 0 -28px -48px;  /* уходит влево к краю листа и под третью карточку */
-  width:54%;
+  margin:-115px 0 -28px -48px;
+  width:62%;
 }
 .deco-photo img{
-  width:100%;max-height:230px;object-fit:cover;
-  object-position:left center;border-radius:0 14px 0 0;
+  width:100%;height:auto;
   display:block;opacity:1;
 }
-
 
 /* ── панели (цветные карточки) ── */
 .panel{border-radius:var(--radius);padding:22px 24px;}
@@ -200,16 +199,16 @@ h1.title{
 
 /* ── страница 02: автор ── */
 .author{display:grid;grid-template-columns:1fr 240px;gap:26px;margin-top:6px;}
-.author-photo{margin:-34px -48px 0 0;}          /* фото до края страницы, как в макете */
+.author-photo{margin:-34px -48px 0 0;}
 .author-photo img{width:100%;height:100%;min-height:420px;object-fit:cover;display:block;}
 .script-name{
   font-family:'Marck Script',cursive;
   font-size:40px;color:var(--green);
-  text-transform:none;               /* подпись — рукописная, без капса */
+  text-transform:none;
   margin:-10px 0 14px;
   white-space:nowrap;
 }
-.script-name::after{                /* зелёный росчерк после имени */
+.script-name::after{
   content:'';display:inline-block;
   width:56px;height:2px;background:var(--green);
   margin-left:14px;vertical-align:middle;border-radius:2px;
@@ -234,7 +233,7 @@ h1.title{
   align-items:center;
 }
 .contacts{
-  border-right:1.5px solid #d9dfc8;   /* вертикальный разделитель, как у Марии */
+  border-right:1.5px solid #d9dfc8;
   padding-right:24px;align-self:stretch;
   display:flex;flex-direction:column;justify-content:center;
 }
@@ -251,8 +250,8 @@ h1.title{
 .qr-code img{width:100%;height:100%;display:block;image-rendering:pixelated;}
 
 /* ── содержание ── */
-.toc-intro{font-size:15.5px;margin-top:18px;}
-.toc-intro2{font-size:15.5px;margin-top:8px;}
+.toc-intro{font-size:16px;margin-top:18px;}
+.toc-intro2{font-size:16px;margin-top:8px;}
 .toc{margin-top:22px;position:relative;z-index:1;}
 .toc-card{
   display:grid;grid-template-columns:230px 1fr;gap:22px;
@@ -266,7 +265,7 @@ h1.title{
   font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;
   text-transform:uppercase;color:var(--ink);line-height:1.2;padding-top:4px;
 }
-.toc-desc{font-size:13.5px;color:var(--body);}
+.toc-desc{font-size:14px;color:var(--body);}
 .toc-list{list-style:none;margin-top:10px;}
 .toc-list li{
   display:flex;justify-content:space-between;align-items:baseline;
@@ -323,7 +322,10 @@ h1.title{
 .page-end{margin-top:30px;}
 .page-end span{display:block;height:1.5px;background:var(--line);}
 
-/* ── редактор (без изменений) ── */
+/* на странице содержания нижняя линия скрыта под фото, как в макете */
+.page:has(.deco-photo) .page-end{display:none;}
+
+/* ── редактор ── */
 .editor{max-width:800px;margin:16px auto;background:#fff;border-radius:12px;padding:24px;box-shadow:0 6px 24px rgba(28,41,87,.12);font-size:14px;}
 .editor h2{font-size:13px;text-transform:uppercase;letter-spacing:.06em;margin:18px 0 8px;color:var(--ink);}
 .editor h2 small{font-weight:400;text-transform:none;color:var(--muted);margin-left:6px;}
@@ -356,6 +358,7 @@ h1.title{
   .title-kicker::before,
   .title-kicker::after{flex:0 0 50px;}
   .contacts{border-right:none;padding-right:0;}
+  .deco-photo{margin:-90px 0 -20px -20px;width:78%;}
 }
 
 /* ── печать ── */
@@ -366,8 +369,7 @@ h1.title{
   .page:last-child{page-break-after:auto;}
 }
 
-/* ── режим сборки PDF: отключаем то, что не понимает html2canvas ── */
+/* ── режим сборки PDF ── */
 body.pdf-mode .panel-photo img{
   mix-blend-mode:normal !important;
-    }
-  
+}
