@@ -27,9 +27,9 @@
   --ink:#1c2957;          /* navy из макета */
   --body:#3a3f4a;
   --muted:#8a8f7e;
-  --green:#3e7d24;
+  --green:#3e7d24;        /* зелёный из макета: цифры, полоски, кнопки */
   --green-lt:#e9f0dc;     /* светло-зелёные плашки */
-  --sage:#f4f5ef;         /* бледные зелёные плашки содержания */
+  --sage:#f4f5ef;         /* бледные плашки содержания */
   --peach:#fdf3e7;        /* персиковые карточки */
   --pink:#fdecea;         /* розовые блоки «Важно» */
   --red:#e8543a;
@@ -258,12 +258,19 @@ h1.title{
   background:var(--sage);border-radius:var(--radius);
   padding:20px 22px;margin-bottom:16px;
 }
-.toc-left{display:flex;gap:12px;align-items:stretch;}
-.toc-num{font-family:'Bebas Neue','Oswald',sans-serif;font-size:44px;font-weight:400;color:var(--green);line-height:1;flex-shrink:0;}
-.toc-bar{width:3px;min-height:44px;background:var(--green);border-radius:2px;flex-shrink:0;}
+.toc-left{display:flex;gap:14px;align-items:flex-start;}
+.toc-num{
+  font-family:'Bebas Neue','Oswald',sans-serif;font-size:46px;font-weight:400;
+  color:var(--green);line-height:0.9;flex-shrink:0;
+}
+/* полоска только у цифры: высота с блоком «цифра + название», вниз не тянется */
+.toc-bar{
+  width:3px;height:58px;background:var(--green);
+  border-radius:2px;flex-shrink:0;margin-top:3px;
+}
 .toc-part-title{
-  font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;
-  text-transform:uppercase;color:var(--ink);line-height:1.2;padding-top:4px;
+  font-family:'Montserrat',sans-serif;font-size:20px;font-weight:800;
+  text-transform:uppercase;color:var(--ink);line-height:1.15;padding-top:2px;
 }
 .toc-desc{font-size:14px;color:var(--body);}
 .toc-list{list-style:none;margin-top:10px;}
@@ -372,4 +379,4 @@ h1.title{
 /* ── режим сборки PDF ── */
 body.pdf-mode .panel-photo img{
   mix-blend-mode:normal !important;
-  }
+}
