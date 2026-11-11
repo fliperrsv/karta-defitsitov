@@ -299,7 +299,11 @@ function renderQR(){
       const q = qrcode(0, 'M');
       q.addData('https://t.me/myfocus_club');
       q.make();
-      box.innerHTML = q.createTableTag(2, 0);        // таблица — надёжно для html2canvas
+      const img = document.createElement('img');
+      img.src = q.createDataURL(8, 0);               // QR как картинка — растянется на весь блок
+      img.alt = 'QR-код';
+      box.innerHTML = '';
+      box.appendChild(img);
     } else {                                         // библиотеки нет — внешняя картинка
       box.innerHTML = '<img src="https://quickchart.io/qr?size=200&text=https://t.me/myfocus_club" alt="QR-код">';
     }
