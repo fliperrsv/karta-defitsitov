@@ -258,15 +258,23 @@ h1.title{
   background:var(--sage);border-radius:var(--radius);
   padding:20px 22px;margin-bottom:16px;
 }
-/* полоска — на правом краю левой колонки, между названием и описанием, во всю высоту */
-.toc-left{position:relative;display:flex;gap:14px;align-items:flex-start;padding-right:14px;}
+/* короткая полоска между цифрой и названием, как «01 | РЕЗУЛЬТАТЫ» */
+.toc-left{
+  position:relative;display:flex;gap:12px;align-items:flex-start;
+  padding-right:16px;
+}
+/* длинная полоска — на границе колонок, во всю высоту карточки */
+.toc-left::after{
+  content:'';position:absolute;right:0;top:0;bottom:0;
+  width:2.5px;background:var(--green);border-radius:2px;
+}
 .toc-num{
   font-family:'Bebas Neue','Oswald',sans-serif;font-size:46px;font-weight:400;
   color:var(--green);line-height:0.9;flex-shrink:0;
 }
 .toc-bar{
-  position:absolute;right:0;top:0;bottom:0;
-  width:3px;background:var(--green);border-radius:2px;
+  width:3px;height:54px;background:var(--green);
+  border-radius:2px;flex-shrink:0;margin-top:4px;
 }
 .toc-part-title{
   font-family:'Montserrat',sans-serif;font-size:17px;font-weight:800;
@@ -359,6 +367,7 @@ h1.title{
   .toc-card{grid-template-columns:1fr;}
   .toc-left{padding-right:0;}
   .toc-bar{display:none;}
+  .toc-left::after{display:none;}
   .page-num{font-size:30px;}
   .panel-photo img{height:150px;}
   .chips{flex-wrap:wrap;gap:12px;}
