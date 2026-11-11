@@ -29,8 +29,8 @@
   --muted:#8a8f7e;
   --green:#3e7d24;        /* зелёный из макета: цифры, полоски, кнопки */
   --green-lt:#e9f0dc;     /* светло-зелёные плашки */
-  --sage:#f4f5ef;         /* бледные плашки содержания */
-  --peach:#fdf3e7;        /* персиковые карточки */
+  --sage:#f7f8f2;         /* бледные плашки содержания */
+  --peach:#fef7ef;        /* персиковые карточки */
   --pink:#fdecea;         /* розовые блоки «Важно» */
   --red:#e8543a;
   --orange:#e8a33d;
@@ -152,7 +152,11 @@ h1.title{
 }
 
 /* ── панели (цветные карточки) ── */
-.panel{border-radius:var(--radius);padding:22px 24px;}
+/* колонка: заголовок, списки — сверху, фото прижато к низу карточки */
+.panel{
+  display:flex;flex-direction:column;
+  border-radius:var(--radius);padding:22px 24px;
+}
 .panel.narrow{padding:18px;}
 .green-panel{background:var(--green-lt);}
 .peach-panel{background:var(--peach);}
@@ -183,7 +187,8 @@ h1.title{
 .dots li::before{content:'•';position:absolute;left:0;color:var(--orange);font-weight:700;}
 .green-dots li::before{color:var(--green);}
 
-.panel-photo{margin-top:16px;}
+/* фото: прижимается к низу карточки, свободное место остаётся над ним */
+.panel-photo{margin-top:auto;padding-top:16px;}
 .panel-photo img{
   width:100%;height:190px;object-fit:cover;border-radius:12px;display:block;
   mix-blend-mode:multiply;   /* белые фоны фото растворяются в цвете карточки */
@@ -369,6 +374,7 @@ h1.title{
   .toc-bar{display:none;}
   .toc-left::after{display:none;}
   .page-num{font-size:30px;}
+  .panel-photo{margin-top:16px;}
   .panel-photo img{height:150px;}
   .chips{flex-wrap:wrap;gap:12px;}
   .chip{padding:10px 20px;}
@@ -390,4 +396,5 @@ h1.title{
 /* ── режим сборки PDF ── */
 body.pdf-mode .panel-photo img{
   mix-blend-mode:normal !important;
-  }
+    }
+    
