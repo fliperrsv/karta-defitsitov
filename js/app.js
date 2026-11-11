@@ -290,5 +290,17 @@ function render() {
 }
 render();
 
+/* QR-код локально, без внешних сервисов */
+function renderQR(){
+  const box = document.getElementById('qr-box');
+  if (!box || typeof qrcode === 'undefined') return;
+  const q = qrcode(0, 'M');
+  q.addData('https://t.me/myfocus_club');
+  q.make();
+  box.innerHTML = q.createTableTag({ cellSize: 2, margin: 0 });
+}
+renderQR();
+
+
 document.getElementById('btn-pdf').addEventListener('click', downloadPDF);
                              
