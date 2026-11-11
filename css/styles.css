@@ -238,7 +238,7 @@ h1.title{
 .qr-n{font-size:11.5px;color:var(--body);margin-top:3px;}
 .qr-arrow{align-self:flex-end;margin:0 6px 10px auto;flex-shrink:0;}
 .qr-code{width:74px;height:74px;flex-shrink:0;background:#fff;border-radius:8px;padding:5px;}
-.qr-code img{width:100%;height:100%;display:block;}
+.qr-code img{width:100%;height:100%;display:block;image-rendering:pixelated;}
 
 /* ── содержание ── */
 .toc-intro{font-size:14.5px;margin-top:18px;}
