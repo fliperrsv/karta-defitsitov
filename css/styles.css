@@ -371,9 +371,13 @@ h1.title{
 
 /* ── мобильная версия ── */
 @media (max-width:640px){
-  .page{margin:0;border-radius:0;padding:24px 20px;}
+  html,body{width:100%;overflow-x:hidden;}
+  .page{width:100%;max-width:100%;margin:0;border-radius:0;padding:24px 18px;}
   h1.title{font-size:38px;}
   .client-name{font-size:26px;}
+  .brand{font-size:11px;}
+  .section{font-size:10px;}
+  .page-head{flex-wrap:wrap;row-gap:4px;}
   .grid-2,.grid-3,.deficit-row,.dyn-grid,.bottom-row{grid-template-columns:1fr;}
   .author{grid-template-columns:1fr;}
   .author-photo{margin:0;border-radius:12px;overflow:hidden;}
@@ -390,8 +394,13 @@ h1.title{
   .chip + .chip::before{display:none;}
   .title-kicker::before,
   .title-kicker::after{flex:0 0 50px;}
+  .important-row{flex-direction:column;align-items:flex-start;gap:10px;}
+  .vline{display:none;}
+  .important-row p{font-size:13px;}
   .contacts{border-right:none;padding-right:0;}
-  .deco-photo{margin:-90px 0 -20px -20px;width:78%;}
+  .deco-photo{margin:-90px 0 -20px -18px;width:78%;}
+  .qr-card{flex-wrap:wrap;}
+  .script-name{font-size:30px;white-space:normal;}
 }
 
 /* ── печать ── */
