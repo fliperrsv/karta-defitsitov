@@ -22,6 +22,11 @@ const ICONS = {
 const DEF_LABELS = { insufficient: "Недостаточно", significant: "Значительно снижен", severe: "Выраженный недостаток" };
 const EXC_LABELS = { elevated: "Повышено", high: "Значительно повышены", severe: "Выраженный избыток" };
 
+/* Названия разделов для шапки страниц (по новому содержанию Марии) */
+const SECTION_ANALYSIS = 'РЕЗУЛЬТАТЫ АНАЛИЗА';   /* страницы 04–06 */
+const SECTION_CORRECT  = 'КОРРЕКЦИЯ ДЕФИЦИТОВ';  /* страницы 07–09 */
+const SECTION_STEPS    = 'ПРАКТИЧЕСКИЕ ШАГИ';    /* страницы 10–11 */
+
 /* ── шапка страницы: росток · название · линия · раздел · номер ── */
 function head(num, section) {
   return `
@@ -128,10 +133,10 @@ function page03() {
   `);
 }
 
-/* ── 04: ваши результаты ── */
+/* ── 04: ресурсная база ── */
 function page04() {
   const w = report.weaknesses;
-  return shell(report.pagesTitles[3], 'Анализ питания', `
+  return shell(report.pagesTitles[3], SECTION_ANALYSIS, `
     <p class="bar-lead">Анализ рациона показывает, какие питательные вещества поступают в избытке, а каких не хватает.</p>
     <div class="grid-2">
       <div class="panel green-panel">
@@ -160,7 +165,7 @@ function page05() {
     { icon: 'scales', cls: 'res-2' },
     { icon: 'pill',   cls: 'res-3' }
   ];
-  return shell(report.pagesTitles[4], 'Анализ питания', `
+  return shell(report.pagesTitles[4], SECTION_ANALYSIS, `
     <p class="plain-lead">Насколько рацион сбалансирован и как он влияет на ресурсный баланс организма.</p>
     <div class="grid-3">
       ${report.resourceCards.map((c, i) => `
@@ -183,7 +188,49 @@ function page05() {
   `);
 }
 
-/* ── страницы 06–15: каркасы ── */
+/* ── 06: какие анализы сдать ──
+   Раньше здесь были карточки избытков (старая структура),
+   теперь по содержанию Марии это страница анализов ── */
+function pageAnalyses() {
+  return shell(report.pagesTitles[5], SECTION_ANALYSIS, `
+    <p class="plain-lead">Анализы крови помогут проверить, как организм справляется с отклонениями в рационе и есть ли связанные с этим нарушения.</p>
+    <div class="analyses">
+      ${report.analyses.map(a => `
+        <div class="analysis">
+          <div class="analysis-num">${a.n}</div>
+          <div class="analysis-body">
+            <div class="card-title green">${esc(a.title)}</div>
+            <div class="analysis-what"><b>Что сдать:</b> ${esc(a.what)}</div>
+            <p class="card-text">${esc(a.text)}</p>
+          </div>
+        </div>`).join('')}
+    </div>
+    <div class="important-row">
+      <div class="important-label"><span class="ic-alert">${ICONS.alert}</span><b>Важно</b></div>
+      <span class="vline"></span>
+      <p>Рекомендации по анализам составлены только на основе текущего рациона. Они не учитывают имеющиеся заболевания. Список анализов может быть дополнен врачом с учётом истории вашего здоровья.</p>
+    </div>
+  `);
+}
+
+/* ── 07: ваши дефициты ── */
+function pageDeficits() {
+  const card = d => `
+    <div class="card deficit ${d.layout || "half"}">
+      <div class="deficit-head">
+        <div class="deficit-name">${esc(d.name)}</div>
+        <div class="badge ${d.level}">${DEF_LABELS[d.level] || d.level}</div>
+      </div>
+      <div class="deficit-what">${esc(d.what)}</div>
+      <p class="card-text">${esc(d.text)}</p>
+    </div>`;
+  return shell(report.pagesTitles[6], SECTION_CORRECT, `
+    <p class="bar-lead">${esc(report.deficitsIntro)}</p>
+    <div class="deficit-grid">${pairLayout(report.deficits, card)}</div>
+  `);
+}
+
+/* ── раскладка карточек по 2 в ряд (3-3-2-2 не прыгает) ── */
 function pairLayout(cards, cardHtml) {
   const rows = [];
   let buf = [];
@@ -199,47 +246,7 @@ function pairLayout(cards, cardHtml) {
       : `<div class="deficit-row">${r.map(cardHtml).join('')}</div>`).join('');
 }
 
-function page06() {
-  const card = e => `
-    <div class="card deficit ${e.layout || "half"}">
-      <div class="deficit-head">
-        <div class="deficit-name">${esc(e.name)}</div>
-        <div class="badge ${e.level}">${EXC_LABELS[e.level] || e.level}</div>
-      </div>
-      <p class="card-text">${esc(e.text)}</p>
-    </div>`;
-  return shell(report.pagesTitles[5], 'Анализ питания', `
-    <div class="deficit-grid">${pairLayout(report.excesses, card)}</div>
-  `);
-}
-
-function page07() {
-  const card = d => `
-    <div class="card deficit ${d.layout || "half"}">
-      <div class="deficit-head">
-        <div class="deficit-name">${esc(d.name)}</div>
-        <div class="badge ${d.level}">${DEF_LABELS[d.level] || d.level}</div>
-      </div>
-      <div class="deficit-what">${esc(d.what)}</div>
-      <p class="card-text">${esc(d.text)}</p>
-    </div>`;
-  return shell(report.pagesTitles[6], 'План восстановления', `
-    <p class="bar-lead">${esc(report.deficitsIntro)}</p>
-    <div class="deficit-grid">${pairLayout(report.deficits, card)}</div>
-  `);
-}
-
-function page08() {
-  const steps = report.pagesTitles.filter(t => t.startsWith("Шаг "));
-  return shell(report.pagesTitles[7], 'План восстановления', `
-    <p class="plain-lead">${esc(report.plan.overview.lead)}</p>
-    <div class="panel green-panel">
-      <div class="panel-head"><span class="ic-check">${ICONS.check}</span><span class="panel-title">Последовательность работы</span></div>
-      <ul class="dots green-dots">${steps.map(s => `<li>${esc(s)}</li>`).join('')}</ul>
-    </div>
-  `);
-}
-
+/* ── страницы с пунктами плана: если текста нет — аккуратный плейсхолдер ── */
 function pageItems(title, kicker, data) {
   const body = data.items && data.items.length
     ? `<div class="panel green-panel"><ul class="dots green-dots">${ul(data.items)}</ul></div>`
@@ -247,44 +254,20 @@ function pageItems(title, kicker, data) {
   return shell(title, kicker, `<p class="plain-lead">${esc(data.lead)}</p>${body}`);
 }
 
-function page11() {
-  return shell(report.pagesTitles[10], 'План восстановления', `
-    <p class="plain-lead">Анализы крови помогут проверить, как организм справляется с отклонениями в рационе.</p>
-    <div class="analyses">
-      ${report.analyses.map(a => `
-        <div class="analysis">
-          <div class="analysis-num">${a.n}</div>
-          <div class="analysis-body">
-            <div class="card-title green">${esc(a.title)}</div>
-            <div class="analysis-what"><b>Что сдать:</b> ${esc(a.what)}</div>
-            <p class="card-text">${esc(a.text)}</p>
-          </div>
-        </div>`).join('')}
-    </div>
-  `);
-}
-
-function page15() {
-  const d = report.plan.next;
-  return shell(report.pagesTitles[14], 'Практические шаги', `
-    <p class="plain-lead">${esc(d.lead)}</p>
-    ${d.text ? `<div class="panel green-panel"><p class="card-text">${esc(d.text)}</p></div>`
-             : `<div class="placeholder">Блок в работе — текст придёт от автора.</div>`}
-  `);
-}
-
-/* ── сборка: 15 страниц ── */
+/* ── сборка: 11 страниц по новому содержанию Марии ── */
 function render() {
   root.innerHTML = [
-    page01(), page02(), page03(), page04(), page05(),
-    page06(), page07(), page08(),
-    pageItems(report.pagesTitles[8],  'План восстановления', report.plan.step1),
-    pageItems(report.pagesTitles[9],  'План восстановления', report.plan.step2),
-    page11(),
-    pageItems(report.pagesTitles[11], 'План восстановления', report.plan.step4),
-    pageItems(report.pagesTitles[12], 'Практические шаги',   report.plan.recommendations),
-    pageItems(report.pagesTitles[13], 'Практические шаги',   report.plan.work),
-    page15()
+    page01(),                    /* 01 Карта дефицитов            */
+    page02(),                    /* 02 Об авторе                  */
+    page03(),                    /* 03 Содержание                 */
+    page04(),                    /* 04 Ресурсная база             */
+    page05(),                    /* 05 Как питание влияет         */
+    pageAnalyses(),              /* 06 Какие анализы сдать        */
+    pageDeficits(),              /* 07 Ваши дефициты              */
+    pageItems(report.pagesTitles[7],  SECTION_CORRECT, report.plan.step1),           /* 08 */
+    pageItems(report.pagesTitles[8],  SECTION_CORRECT, report.plan.step4),           /* 09 */
+    pageItems(report.pagesTitles[9],  SECTION_STEPS,   report.plan.recommendations), /* 10 */
+    pageItems(report.pagesTitles[10], SECTION_STEPS,   report.plan.next)             /* 11 */
   ].join('');
   window.scrollTo({ top: 0 });
 }
@@ -293,18 +276,18 @@ render();
 /* ── QR-код: локальная библиотека, с запасной картинкой ── */
 function renderQR(){
   const box = document.getElementById('qr-box');
-  if (!box || box.innerHTML) return;                 // контейнера нет или QR уже нарисован
+  if (!box || box.innerHTML) return;
   try{
-    if (typeof qrcode !== 'undefined'){              // локальная библиотека на месте
+    if (typeof qrcode !== 'undefined'){
       const q = qrcode(0, 'M');
       q.addData('https://t.me/myfocus_club');
       q.make();
       const img = document.createElement('img');
-      img.src = q.createDataURL(8, 0);               // QR как картинка — растянется на весь блок
+      img.src = q.createDataURL(8, 0);
       img.alt = 'QR-код';
       box.innerHTML = '';
       box.appendChild(img);
-    } else {                                         // библиотеки нет — внешняя картинка
+    } else {
       box.innerHTML = '<img src="https://quickchart.io/qr?size=200&text=https://t.me/myfocus_club" alt="QR-код">';
     }
   }catch(e){
