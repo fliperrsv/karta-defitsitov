@@ -77,54 +77,62 @@ body{background:var(--cream);font-family:'Montserrat',sans-serif;color:var(--bod
   color:var(--pagenum);line-height:1;flex-shrink:0;
 }
 
-/* ── заголовок страницы: navy, влево, крупно ── */
+/* ── заголовок страницы: navy, влево, крупно (68px — под оригинал) ── */
 h1.title{
   font-family:'Bebas Neue','Oswald',sans-serif;font-weight:400;
-  font-size:58px;line-height:1.0;text-transform:uppercase;
+  font-size:68px;line-height:.95;text-transform:uppercase;
   color:var(--ink);text-align:left;letter-spacing:.01em;
 }
-.title-page h1.title{text-align:center;}
 
 /* ── титул: надпись с длинными линиями по краям ── */
 .title-kicker{
   display:flex;align-items:center;justify-content:center;gap:18px;
-  font-family:'Montserrat',sans-serif;font-size:12px;font-weight:600;
+  font-family:'Montserrat',sans-serif;font-size:13px;font-weight:600;
   letter-spacing:.25em;text-transform:uppercase;color:var(--muted);
   margin-bottom:14px;
 }
 .title-kicker::before,
 .title-kicker::after{
-  content:'';flex:0 0 150px;height:2px;
+  content:'';flex:0 0 170px;height:2px;
   background:var(--ink);border-radius:2px;
 }
 
+/* титульный заголовок: крупнее обычного и с отступом сверху, как в макете */
+.title-page h1.title{
+  text-align:center;
+  font-size:100px;
+  margin-top:36px;
+}
+.title-page .title-kicker{margin-bottom:12px;}
+
+/* имя клиента: обычный шрифт, крупный и плотный — как в макете */
 .client-name{
-  font-family:'Bebas Neue','Oswald',sans-serif;font-weight:400;
-  font-size:34px;color:var(--ink);text-align:center;margin-top:8px;
+  font-family:'Montserrat',sans-serif;font-weight:600;
+  font-size:40px;color:var(--ink);text-align:center;margin-top:16px;
 }
 
-.lead{text-align:center;font-size:15px;margin-top:22px;}
-.lead.italic{font-style:italic;}
-.plain-lead{font-size:15.5px;margin-top:18px;}
+.lead{text-align:center;font-size:19px;font-weight:600;margin-top:28px;}
+.lead.italic{font-size:15.5px;font-weight:400;font-style:italic;margin-top:14px;}
+.plain-lead{font-size:17px;margin-top:18px;}
 .bar-lead{
-  font-size:15.5px;margin-top:16px;padding-left:16px;
+  font-size:17px;margin-top:16px;padding-left:16px;
   border-left:4px solid var(--green);
 }
 
 /* ── плашки клиента ── */
-.chips{display:flex;justify-content:center;gap:26px;margin-top:26px;}
+.chips{display:flex;justify-content:center;gap:30px;margin-top:32px;}
 .chip{
   position:relative;
   background:var(--green-lt);border-radius:10px;
-  padding:12px 34px;display:flex;flex-direction:column;
+  padding:14px 38px;display:flex;flex-direction:column;
   align-items:center;gap:2px;text-align:center;
 }
 .chip + .chip::before{
-  content:'';position:absolute;left:-14px;top:25%;
+  content:'';position:absolute;left:-15px;top:25%;
   height:50%;width:1px;background:#d9dfc8;
 }
-.chip span{display:block;font-size:11px;letter-spacing:.04em;color:var(--body);}
-.chip b{color:var(--green);font-size:17px;}
+.chip span{display:block;font-size:13px;letter-spacing:.04em;color:var(--body);}
+.chip b{color:var(--green);font-size:22px;}
 
 /* ── callout ── */
 .callout{
@@ -139,9 +147,14 @@ h1.title{
   width:3px;background:var(--green);border-radius:2px;
 }
 .callout.green b{color:var(--green);}
+/* «Карта поможет…» на титуле — крупный жирный текст, как в оригинале */
+.title-page .callout.green{
+  font-size:19px;font-weight:700;line-height:1.5;
+  text-align:center;padding:20px 26px;
+}
 
-.photo{margin-top:26px;}
-.photo img{width:100%;max-height:400px;object-fit:cover;object-position:center;border-radius:8px;display:block;}
+.photo{margin-top:30px;}
+.photo img{width:100%;max-height:430px;object-fit:cover;object-position:center;border-radius:8px;display:block;}
 
 /* черника: прозрачный PNG в левом нижнем углу, под третьей карточкой */
 .deco-photo{
@@ -170,17 +183,17 @@ h1.title{
 .panel-head{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
 .panel-head.tight{gap:8px;}
 .panel-title{
-  font-family:'Bebas Neue','Oswald',sans-serif;font-size:20px;font-weight:400;
+  font-family:'Bebas Neue','Oswald',sans-serif;font-size:24px;font-weight:400;
   text-transform:uppercase;color:var(--ink);
 }
-.panel-title.sm{font-size:17px;}
+.panel-title.sm{font-size:19px;}
 .ic-check{
   width:30px;height:30px;border-radius:8px;background:var(--green);
   display:flex;align-items:center;justify-content:center;flex-shrink:0;
 }
 .ic-warn{flex-shrink:0;display:flex;}
 .ic-round{
-  width:36px;height:36px;border-radius:50%;
+  width:44px;height:44px;border-radius:50%;
   display:flex;align-items:center;justify-content:center;flex-shrink:0;
 }
 .ic-round.orange{background:var(--red);}
@@ -189,8 +202,8 @@ h1.title{
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:24px;}
 .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-top:24px;}
 
-.dots{list-style:none;font-size:14px;}
-.dots li{padding-left:16px;position:relative;margin-bottom:8px;}
+.dots{list-style:none;font-size:15px;}
+.dots li{padding-left:16px;position:relative;margin-bottom:10px;}
 .dots li::before{content:'•';position:absolute;left:0;color:var(--orange);font-weight:700;}
 .green-dots li::before{color:var(--green);}
 
@@ -202,14 +215,14 @@ h1.title{
 }
 
 .sub-title{
-  font-size:14.5px;font-weight:700;color:var(--ink);
+  font-size:16px;font-weight:700;color:var(--ink);
   margin:14px 0 6px;padding-top:10px;border-top:1px solid #e5e0d2;
 }
 .sub-title:first-of-type{margin-top:4px;border-top:none;padding-top:0;}
 
 .card-text{font-size:14.5px;}
 /* в трёх узких карточках страницы 05 текст крупнее — набивает карточку, как в макете */
-.grid-3 .card-text{font-size:15.5px;line-height:1.65;}
+.grid-3 .card-text{font-size:16.5px;line-height:1.7;}
 
 /* ── страница 02: автор ── */
 .author{display:grid;grid-template-columns:1fr 240px;gap:26px;margin-top:6px;}
@@ -217,9 +230,9 @@ h1.title{
 .author-photo img{width:100%;height:100%;min-height:420px;object-fit:cover;display:block;}
 .script-name{
   font-family:'Marck Script',cursive;
-  font-size:40px;color:var(--green);
+  font-size:46px;color:var(--green);
   text-transform:none;
-  margin:-10px 0 14px;
+  margin:-6px 0 16px;
   white-space:nowrap;
 }
 .script-name::after{
@@ -227,19 +240,19 @@ h1.title{
   width:56px;height:2px;background:var(--green);
   margin-left:14px;vertical-align:middle;border-radius:2px;
 }
-.role{font-size:14.5px;line-height:1.5;}
+.role{font-size:15.5px;line-height:1.5;}
 .qmark{margin:16px 0 6px;}
-.qmark svg{width:46px;height:28px;}
-.quote{font-size:15.5px;font-style:italic;line-height:1.7;}
+.qmark svg{width:52px;height:32px;}
+.quote{font-size:17px;font-style:italic;line-height:1.7;}
 
 .important-row{
   display:flex;align-items:center;gap:16px;margin-top:26px;
   background:var(--pink);border-radius:12px;padding:16px 20px;
 }
 .important-label{display:flex;align-items:center;gap:10px;flex-shrink:0;}
-.important-label b{color:var(--red);font-size:18px;}
+.important-label b{color:var(--red);font-size:20px;}
 .vline{width:1px;align-self:stretch;background:#e8b8b0;}
-.important-row p{font-size:13.5px;}
+.important-row p{font-size:15px;}
 
 .bottom-row{
   display:grid;grid-template-columns:1fr 1.2fr;gap:24px;
@@ -251,26 +264,26 @@ h1.title{
   padding-right:24px;align-self:stretch;
   display:flex;flex-direction:column;justify-content:center;
 }
-.contacts-title{font-size:13.5px;font-weight:700;color:var(--ink);margin-bottom:8px;}
-.c-line{display:flex;align-items:center;gap:8px;font-size:13.5px;margin-bottom:6px;}
+.contacts-title{font-size:14.5px;font-weight:700;color:var(--ink);margin-bottom:8px;}
+.c-line{display:flex;align-items:center;gap:8px;font-size:14.5px;margin-bottom:6px;}
 .qr-card{
   display:flex;align-items:center;gap:12px;
   background:var(--green-lt);border-radius:12px;padding:12px 16px;
 }
-.qr-t{font-size:13.5px;font-weight:700;color:var(--green);}
-.qr-n{font-size:12px;color:var(--body);margin-top:3px;}
+.qr-t{font-size:14.5px;font-weight:700;color:var(--green);}
+.qr-n{font-size:13px;color:var(--body);margin-top:3px;}
 .qr-arrow{align-self:flex-end;margin:0 6px 10px auto;flex-shrink:0;}
 .qr-code{width:74px;height:74px;flex-shrink:0;background:#fff;border-radius:8px;padding:5px;}
 .qr-code img{width:100%;height:100%;display:block;image-rendering:pixelated;}
 
 /* ── содержание ── */
-.toc-intro{font-size:16px;margin-top:18px;}
-.toc-intro2{font-size:16px;margin-top:8px;}
+.toc-intro{font-size:17px;margin-top:18px;}
+.toc-intro2{font-size:17px;margin-top:8px;}
 .toc{margin-top:22px;position:relative;z-index:1;}
 .toc-card{
   display:grid;grid-template-columns:260px 1fr;gap:22px;
   background:var(--sage);border-radius:var(--radius);
-  padding:20px 22px;margin-bottom:16px;
+  padding:22px 24px;margin-bottom:16px;
 }
 /* короткая полоска между цифрой и названием, как «01 | РЕЗУЛЬТАТЫ» */
 .toc-left{
@@ -283,7 +296,7 @@ h1.title{
   width:2.5px;background:var(--green);border-radius:2px;
 }
 .toc-num{
-  font-family:'Bebas Neue','Oswald',sans-serif;font-size:46px;font-weight:400;
+  font-family:'Bebas Neue','Oswald',sans-serif;font-size:54px;font-weight:400;
   color:var(--green);line-height:0.9;flex-shrink:0;
 }
 .toc-bar{
@@ -291,14 +304,14 @@ h1.title{
   border-radius:2px;flex-shrink:0;margin-top:4px;
 }
 .toc-part-title{
-  font-family:'Montserrat',sans-serif;font-size:17px;font-weight:800;
+  font-family:'Montserrat',sans-serif;font-size:19px;font-weight:800;
   text-transform:uppercase;color:var(--ink);line-height:1.15;padding-top:2px;
 }
-.toc-desc{font-size:14px;color:var(--body);}
+.toc-desc{font-size:15px;color:var(--body);}
 .toc-list{list-style:none;margin-top:10px;}
 .toc-list li{
   display:flex;justify-content:space-between;align-items:baseline;
-  font-size:14px;padding:7px 0;border-bottom:1px solid #e5e0d2;
+  font-size:15px;padding:9px 0;border-bottom:1px solid #e5e0d2;
 }
 .toc-list li:last-child{border-bottom:none;}
 .toc-page{font-weight:700;color:var(--green);}
@@ -310,10 +323,11 @@ h1.title{
   padding:20px 22px;margin-top:22px;
 }
 .ic-alert.big{flex-shrink:0;margin-top:4px;}
-.verdict-cap{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);}
+.verdict-cap{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);}
 .verdict-title{
-  font-size:22px;font-weight:700;color:var(--red);margin:4px 0 8px;
+  font-size:26px;font-weight:700;color:var(--red);margin:4px 0 8px;
 }
+.verdict .card-text{font-size:15.5px;}
 
 /* ── анализы ── */
 .analyses{margin-top:22px;}
@@ -376,7 +390,10 @@ h1.title{
   body:not(.pdf-mode) html,body:not(.pdf-mode) body{width:100%;overflow-x:hidden;}
   body:not(.pdf-mode) .page{width:100%;max-width:100%;margin:0;border-radius:0;padding:24px 18px;}
   body:not(.pdf-mode) h1.title{font-size:38px;}
+  body:not(.pdf-mode) .title-page h1.title{font-size:44px;margin-top:16px;}
   body:not(.pdf-mode) .client-name{font-size:26px;}
+  body:not(.pdf-mode) .lead{font-size:16px;}
+  body:not(.pdf-mode) .title-page .callout.green{font-size:16px;}
   body:not(.pdf-mode) .brand{font-size:11px;}
   body:not(.pdf-mode) .section{font-size:10px;}
   body:not(.pdf-mode) .page-head{flex-wrap:wrap;row-gap:4px;}
@@ -433,42 +450,3 @@ body.pdf-mode .panel-photo img{
   .page{box-shadow:none;margin:0;border-radius:0;max-width:100%;page-break-after:always;overflow:hidden;}
   .page:last-child{page-break-after:auto;}
 }
-
-/* ── Титульная страница: подгонка под оригинал ── */
-
-/* Заголовок: крупнее и ниже, почти во всю ширину листа */
-.title-page h1.title{
-  font-size:92px;
-  margin-top:28px;
-}
-
-/* Киккер: плотнее к заголовку, линии чуть длиннее */
-.title-page .title-kicker{ margin-bottom:10px; }
-.title-page .title-kicker::before,
-.title-page .title-kicker::after{ flex-basis:170px; }
-
-/* Имя клиента: обычный шрифт, крупный и плотный — как в макете */
-.title-page .client-name{
-  font-family:'Montserrat',sans-serif;
-  font-weight:600;
-  font-size:38px;
-  margin-top:14px;
-}
-
-/* Чипы: значения крупнее */
-.title-page .chip{ padding:14px 38px; }
-.title-page .chip span{ font-size:12px; }
-.title-page .chip b{ font-size:20px; }
-
-/* Лиды чуть крупнее */
-.title-page .lead{ font-size:16px; margin-top:26px; }
-.title-page .lead.italic{ font-size:15.5px; }
-
-/* «Карта поможет…»: крупный жирный текст, как в оригинале */
-.title-page .callout.green{
-  font-size:20px;
-  font-weight:700;
-  line-height:1.45;
-  padding:20px 24px 20px 40px;
-}
-
