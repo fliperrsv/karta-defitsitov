@@ -433,4 +433,42 @@ body.pdf-mode .panel-photo img{
   .page{box-shadow:none;margin:0;border-radius:0;max-width:100%;page-break-after:always;overflow:hidden;}
   .page:last-child{page-break-after:auto;}
 }
-    
+
+/* ── Титульная страница: подгонка под оригинал ── */
+
+/* Заголовок: крупнее и ниже, почти во всю ширину листа */
+.title-page h1.title{
+  font-size:92px;
+  margin-top:28px;
+}
+
+/* Киккер: плотнее к заголовку, линии чуть длиннее */
+.title-page .title-kicker{ margin-bottom:10px; }
+.title-page .title-kicker::before,
+.title-page .title-kicker::after{ flex-basis:170px; }
+
+/* Имя клиента: обычный шрифт, крупный и плотный — как в макете */
+.title-page .client-name{
+  font-family:'Montserrat',sans-serif;
+  font-weight:600;
+  font-size:38px;
+  margin-top:14px;
+}
+
+/* Чипы: значения крупнее */
+.title-page .chip{ padding:14px 38px; }
+.title-page .chip span{ font-size:12px; }
+.title-page .chip b{ font-size:20px; }
+
+/* Лиды чуть крупнее */
+.title-page .lead{ font-size:16px; margin-top:26px; }
+.title-page .lead.italic{ font-size:15.5px; }
+
+/* «Карта поможет…»: крупный жирный текст, как в оригинале */
+.title-page .callout.green{
+  font-size:20px;
+  font-weight:700;
+  line-height:1.45;
+  padding:20px 24px 20px 40px;
+}
+
