@@ -4,7 +4,8 @@ const root = document.getElementById('report');
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const ul = items => items.map(t => `<li>${esc(t)}</li>`).join('');
 
-/* ── иконки (инлайн-SVG, как в макете Марии) ── */
+/* ── иконки (инлайн-SVG, как в макете Марии) ──
+   Зелёный приведён к палитре макета: был #4a7c2f, стал var палитры #3e7d24 */
 const ICONS = {
   sprout: `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M12 21v-8"/><path d="M12 13C12 9 9 7 5 7c0 4 3 6 7 6z" fill="#fff" stroke="none"/><path d="M12 11c0-3 2.5-5 6-5 0 3-2.5 5-6 5z" fill="#fff" stroke="none"/></svg>`,
   check: `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>`,
@@ -13,10 +14,10 @@ const ICONS = {
   scales: `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M12 4v16M6 20h12M12 6l-5 5 2.5 4h5L17 11 12 6z"/></svg>`,
   pill: `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#fff" stroke-width="2"><rect x="4" y="9" width="16" height="7" rx="3.5" transform="rotate(-30 12 12)"/><line x1="10" y1="8" x2="14" y2="14"/></svg>`,
   alert: `<svg viewBox="0 0 40 40" width="40" height="40"><circle cx="20" cy="20" r="18" fill="#e8543a"/><text x="20" y="27" font-size="20" font-weight="bold" fill="#fff" text-anchor="middle" font-family="Georgia">!</text></svg>`,
-  quote: `<svg viewBox="0 0 40 24" width="40" height="24" fill="#4a7c2f"><path d="M0 24V14C0 6 4 1 12 0l1 4c-4 1-6 4-6 8h7v12H0zm18 0V14c0-8 4-13 12-14l1 4c-4 1-6 4-6 8h7v12H18z"/></svg>`,
-  tg: `<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#4a7c2f" stroke-width="1.8" stroke-linejoin="round"><path d="M21 3L3 11l6 2 2 6 4-5 5 3L21 3z"/></svg>`,
-  ig: `<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#4a7c2f" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#4a7c2f" stroke="none"/></svg>`,
-  arrow: `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#4a7c2f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17c5 2 10-1 12-7"/><path d="M12 9l4-2 2 4"/></svg>`,
+  quote: `<svg viewBox="0 0 40 24" width="40" height="24" fill="#3e7d24"><path d="M0 24V14C0 6 4 1 12 0l1 4c-4 1-6 4-6 8h7v12H0zm18 0V14c0-8 4-13 12-14l1 4c-4 1-6 4-6 8h7v12H18z"/></svg>`,
+  tg: `<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#3e7d24" stroke-width="1.8" stroke-linejoin="round"><path d="M21 3L3 11l6 2 2 6 4-5 5 3L21 3z"/></svg>`,
+  ig: `<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#3e7d24" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#3e7d24" stroke="none"/></svg>`,
+  arrow: `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#3e7d24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17c5 2 10-1 12-7"/><path d="M12 9l4-2 2 4"/></svg>`,
 };
 
 const DEF_LABELS = { insufficient: "Недостаточно", significant: "Значительно снижен", severe: "Выраженный недостаток" };
