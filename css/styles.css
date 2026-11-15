@@ -395,7 +395,7 @@ h1.title{
   body:not(.pdf-mode) html,body:not(.pdf-mode) body{width:100%;overflow-x:hidden;}
   body:not(.pdf-mode) .page{width:100%;max-width:100%;margin:0;border-radius:0;padding:24px 18px;}
   body:not(.pdf-mode) h1.title{font-size:38px;}
-  body:not(.pdf-mode) .title-page h1.title{font-size:44px;margin-top:16px;}
+  body:not(.pdf-mode) .title-page h1.title{font-size:min(44px,11vw);margin-top:16px;}
   body:not(.pdf-mode) .client-name{font-size:26px;}
   body:not(.pdf-mode) .lead{font-size:15px;}
   body:not(.pdf-mode) .title-page .callout.green{font-size:14px;}
@@ -429,6 +429,12 @@ h1.title{
   body:not(.pdf-mode) .deco-photo{margin:-90px 0 -20px -18px;width:78%;}
   body:not(.pdf-mode) .qr-card{flex-wrap:wrap;}
   body:not(.pdf-mode) .script-name{font-size:30px;white-space:normal;}
+  body:not(.pdf-mode) .title-page h1.title{
+  font-size:min(44px,11vw);
+  margin-top:16px;
+  white-space:nowrap;
+}
+
 }
 
 /* ── режим сборки PDF ──
