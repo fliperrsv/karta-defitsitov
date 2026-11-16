@@ -97,9 +97,10 @@ h1.title{
 }
 .title-kicker::before,
 .title-kicker::after{
-  content:'';flex:0 0 170px;height:2px;
+  content:'';flex:0 0 118px;height:2px;
   background:var(--ink);border-radius:2px;
 }
+
 
 /* титульный заголовок: крупнее обычного и с отступом сверху, как в макете */
 .title-page h1.title{
